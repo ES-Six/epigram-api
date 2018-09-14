@@ -1,0 +1,41 @@
+{
+  "name": "epigram-api",
+  "version": "1.0.0",
+  "description": "EPIGram API is a RESTFULL API for EPIGram client using NodeJS with Framework HapiJS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andnerb/epigram-api.git"
+  },
+  "keywords": [
+    "EPIGram",
+    "API",
+    "Node",
+    "Hapi",
+    "Sequelize",
+    "ESLint"
+  ],
+  "author": "BrB",
+  "license": "BSD-3-Clause-No-Nuclear-License",
+  "dependencies": {
+    "boom": "^7.2.0",
+    "hapi": "^17.5.4",
+    "joi": "^13.6.0",
+    "js-sha512": "^0.8.0",
+    "mysql2": "^1.6.1",
+    "sequelize": "^4.38.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.0",
+    "prettier": "1.14.2"
+  }
+}
