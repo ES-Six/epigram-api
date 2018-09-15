@@ -1,15 +1,23 @@
 module.exports = {
   up: (queryInterface, Sequelize) => (
-    queryInterface.createTable('photos', {
+    queryInterface.createTable("photos", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      file_path: {
+      title: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      },
+      file_path: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       category_id: {
         type: Sequelize.INTEGER,
@@ -21,5 +29,5 @@ module.exports = {
       }
     })
   ),
-  down: (queryInterface) => (queryInterface.dropTable('photos'))
+  down: (queryInterface) => (queryInterface.dropTable("photos"))
 };
