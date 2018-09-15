@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: true
     });
-    user.associate = (/* models */) => {
-        // Put associations here
+    user.associate = (models) => {
+        user.hasMany(models.photo, {foreignKey: 'user_id', sourceKey: 'id'});
     };
     return user;
 };
