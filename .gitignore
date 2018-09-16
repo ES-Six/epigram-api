@@ -62,3 +62,7 @@ typings/
 
 # Jetbrains IDE files
 .idea/
+
+# Jetbrains IDE files
+file_vault/*
+!file_vault/.gitkeep
