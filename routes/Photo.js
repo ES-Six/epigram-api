@@ -25,6 +25,8 @@ module.exports = (models) => {
     });
 
     for (let idx = 0; idx < photos.length; idx += 1) {
+      delete photos[idx].dataValues.file_path;
+      photos[idx].dataValues.url = `/photo/${photos[idx].dataValues.id}`;
       result.push(photos[idx].dataValues);
     }
 
