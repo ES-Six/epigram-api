@@ -1,7 +1,7 @@
 const Joi = require("joi");
 const Boom = require("boom");
-const response = require("../tools/response");
 const fs = require('fs');
+const response = require("../tools/response");
 
 module.exports = (models) => {
 
