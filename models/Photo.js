@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   photo.associate = (models) => {
     photo.belongsTo(models.category, { foreignKey: "category_id", sourceKey: "id" });
+    photo.hasMany(models.comment, { foreignKey: "photo_id", sourceKey: "id" });
   };
   return photo;
 };

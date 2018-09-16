@@ -34,8 +34,6 @@ module.exports = (models) => {
   };
 
   const addPhoto = async (request, h) => {
-    const result = [];
-
     const category = await models.category.findOne({
       where: {
         id: request.params.category_id
@@ -73,7 +71,10 @@ module.exports = (models) => {
     // Save buffer to disk
     fs.writeFileSync(`file_vault/${photo.dataValues.id}.jpg`, buffer);
 
-    return response.success_response(h, result, null, 201);
+    delete photo.dataValues.file_path;
+    photo.dataValues.url = `/photo/${photo.dataValues.id}`;
+
+    return response.success_response(h, photo.dataValues, null, 201);
   };
 
   const readPhoto = async (request, h) => {
