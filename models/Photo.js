@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
     file_path: DataTypes.STRING,
+    mime_type: DataTypes.STRING,
     category_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER
   }, {

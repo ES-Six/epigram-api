@@ -19,6 +19,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
+      mime_type: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       category_id: {
         type: Sequelize.INTEGER,
         allowNull: false
