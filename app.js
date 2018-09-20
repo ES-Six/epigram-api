@@ -11,7 +11,8 @@ const server = Hapi.server({
         throw err;
       }
     }
-  }
+  },
+  debug: { request: ['error'] }
 });
 
 server.realm.modifiers.route.prefix = "/api/v1";

@@ -21,12 +21,17 @@ module.exports = (models) => {
     const photos = await models.photo.findAll({
       where: {
         category_id: request.params.category_id
-      }
+      },
+      attributes: Object.keys(models.photo.attributes).concat([
+        [models.sequelize.literal("(SELECT COUNT(*) FROM opinions WHERE opinions.photo_id = photo.id AND opinions.opinion = 'LIKE')"), 'total_likes'],
+        [models.sequelize.literal("(SELECT COUNT(*) FROM opinions WHERE opinions.photo_id = photo.id AND opinions.opinion = 'DISLIKE')"), 'total_dislikes']
+      ])
     });
 
     for (let idx = 0; idx < photos.length; idx += 1) {
       delete photos[idx].dataValues.file_path;
       photos[idx].dataValues.url = `/photo/${photos[idx].dataValues.id}`;
+
       result.push(photos[idx].dataValues);
     }
 
@@ -152,7 +157,7 @@ module.exports = (models) => {
             file: Joi.object({
               hapi: Joi.object({
                 headers: Joi.object({
-                  'content-type': Joi.string().valid(['image/jpeg']).required()
+                  'content-type': Joi.string().valid(['image/jpeg', 'image/png']).required()
                 }).unknown()
               }).unknown()
             }).unknown()
