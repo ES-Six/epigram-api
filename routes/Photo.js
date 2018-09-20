@@ -90,7 +90,7 @@ module.exports = (models) => {
     });
 
     if (photo === null) {
-      throw Boom.notFound(`Photo with id '${request.params.category_id}' does not exist`, null);
+      throw Boom.notFound(`Photo with id '${request.params.id}' does not exist`, null);
     }
 
     let file = null;
@@ -106,6 +106,37 @@ module.exports = (models) => {
     }
 
     return h.response(file).type(photo.mime_type).code(200);
+  };
+
+  const delPhoto = async (request, h) => {
+    const photo = await models.photo.findOne({
+      where: {
+        id: request.params.id
+      }
+    });
+
+    if (photo === null) {
+      throw Boom.notFound(`Photo with id '${request.params.category_id}' does not exist`, null);
+    }
+
+    await Promise.all([models.opinion.destroy({
+      where: {
+        photo_id: request.params.id
+      }
+    }),
+    models.comment.destroy({
+      where: {
+        photo_id: request.params.id
+      }
+    })]);
+
+    await models.photo.destroy({
+      where: {
+        id: request.params.id
+      }
+    });
+
+    return response.success_response(h, null, "Photo and associated ressources deleted", 202);
   };
 
   return [
@@ -126,6 +157,19 @@ module.exports = (models) => {
       method: "GET",
       path: "/photo/{id}",
       handler: readPhoto,
+      options: {
+        auth: "default",
+        validate: {
+          params: {
+            id: Joi.number().integer().required()
+          }
+        }
+      }
+    },
+    {
+      method: "DELETE",
+      path: "/photo/{id}",
+      handler: delPhoto,
       options: {
         auth: "default",
         validate: {
