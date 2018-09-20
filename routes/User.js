@@ -5,6 +5,16 @@ const response = require("../tools/response");
 
 module.exports = (models) => {
 
+  /**
+   * @api {post} /api/v1/user/login Login with email / password
+   * @apiName UserLogin
+   * @apiGroup User
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {email} email The user email
+   * @apiParam {password} password The user password
+   *
+   */
   const login = async (request, h) => {
     const user = await models.user.findOne({
       where: {
@@ -22,6 +32,16 @@ module.exports = (models) => {
     throw Boom.forbidden("bad password", "custom");
   };
 
+  /**
+   * @api {post} /api/v1/user/register Register a user
+   * @apiName UserRegister
+   * @apiGroup User
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {email} email The user email
+   * @apiParam {password} password The user password
+   *
+   */
   const registration = async (request, h) => {
     const user = await models.user.findOne({
       where: {
@@ -42,10 +62,25 @@ module.exports = (models) => {
     return response.success_response(h, null, "User registered successfully", 201);
   };
 
+  /**
+   * @api {get} /api/v1/user Get current user informations
+   * @apiName ReadUser
+   * @apiGroup User
+   * @apiVersion 1.0.0
+   *
+   */
   const readuser = async (request, h) => (
     response.success_response(h, request.auth.credentials.user, null, 200)
   );
 
+
+  /**
+   * @api {delete} /api/v1/user Delete the user account and every ressources associated with it
+   * @apiName DeleteUser
+   * @apiGroup User
+   * @apiVersion 1.0.0
+   *
+   */
   const deleteUser = async (request, h) => {
 
     const pendingOpinionAndCommentDeletions = [];
