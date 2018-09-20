@@ -49,6 +49,26 @@ module.exports = (models) => {
     return response.success_response(h, null, "Comment added", 200);
   };
 
+  const delComment = async (request, h) => {
+    const photo = await models.photo.findOne({
+      where: {
+        id: request.params.id
+      }
+    });
+
+    if (photo === null) {
+      throw Boom.notFound(`Photo with id '${request.params.id}' does not exist`, null);
+    }
+
+    await models.comment.destroy({
+      where: {
+        id: request.params.id_comment
+      }
+    });
+
+    return response.success_response(h, null, "Comment deleted", 202);
+  };
+
   return [
     {
       method: "GET",
@@ -72,6 +92,20 @@ module.exports = (models) => {
         validate: {
           params: {
             id: Joi.number().integer().required()
+          }
+        }
+      }
+    },
+    {
+      method: "DELETE",
+      path: "/photo/{id}/comment/{id_comment}",
+      handler: delComment,
+      options: {
+        auth: "default",
+        validate: {
+          params: {
+            id: Joi.number().integer().required(),
+            id_comment: Joi.number().integer().required()
           }
         }
       }

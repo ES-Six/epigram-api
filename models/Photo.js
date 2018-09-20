@@ -13,8 +13,6 @@ module.exports = (sequelize, DataTypes) => {
     photo.belongsTo(models.category, { foreignKey: "category_id", sourceKey: "id" });
     photo.hasMany(models.comment, { foreignKey: "photo_id", sourceKey: "id" });
     photo.hasMany(models.opinion, { foreignKey: "photo_id", sourceKey: "id" });
-    photo.hasMany(models.opinion, { as: "opinionlike", foreignKey: "photo_id", sourceKey: "id" });
-    photo.hasMany(models.opinion, { as: "opiniondislike", foreignKey: "photo_id", sourceKey: "id" });
   };
   return photo;
 };
