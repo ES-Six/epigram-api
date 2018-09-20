@@ -32,3 +32,9 @@ Windows
 
     set NODE_ENV=production
     npm start
+    
+### Generate documentation
+
+    npm install -g apidoc http-server
+    apidoc -i routes -o docs
+    cd docs && http-server -o
