@@ -46,6 +46,47 @@ module.exports = (models) => {
     response.success_response(h, request.auth.credentials.user, null, 200)
   );
 
+  const deleteUser = async (request, h) => {
+
+    const pendingOpinionAndCommentDeletions = [];
+
+    const photoIds = await models.photo.findAll({
+      where: {
+        user_id: request.auth.credentials.user.id
+      },
+      attributes: ['id']
+    });
+
+    for (let i = 0; i < photoIds.length; i += 1) {
+      pendingOpinionAndCommentDeletions.push(models.opinion.destroy({
+        where: {
+          photo_id: photoIds[i].dataValues.id
+        }
+      }));
+      pendingOpinionAndCommentDeletions.push(models.comment.destroy({
+        where: {
+          photo_id: photoIds[i].dataValues.id
+        }
+      }));
+    }
+
+    await Promise.all(pendingOpinionAndCommentDeletions);
+
+    await models.photo.destroy({
+      where: {
+        user_id: request.auth.credentials.user.id
+      }
+    });
+
+    await models.user.destroy({
+      where: {
+        id: request.auth.credentials.user.id
+      }
+    });
+
+    return response.success_response(h, null, "Your account and all associated ressources has been deleted", 202);
+  };
+
   return [
     {
       method: "GET",
@@ -79,6 +120,14 @@ module.exports = (models) => {
             password: Joi.string().min(6).max(32).required()
           }
         }
+      }
+    },
+    {
+      method: "DELETE",
+      path: "/user",
+      config: {
+        auth: "default",
+        handler: deleteUser
       }
     }
   ];
