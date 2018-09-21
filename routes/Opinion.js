@@ -4,7 +4,16 @@ const response = require("../tools/response");
 
 module.exports = (models) => {
 
-  const postOpinion = async (request, h) => {
+  /**
+   * @api {put} /api/v1/photo/{id}/opinion set or update a LIKE / DISLIKE to a photo
+   * @apiName SetUserOpinion
+   * @apiGroup Opinion
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {id} id The id of the photo
+   *
+   */
+  const putOpinion = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
         id: request.params.id
@@ -37,6 +46,15 @@ module.exports = (models) => {
     return response.success_response(h, null, `Photo with id ${request.params.id} have been ${request.payload.opinion}`, 200);
   };
 
+  /**
+   * @api {get} /api/v1/photo/{id}/opinion get the current user opinion for a photo
+   * @apiName GetUserOpinion
+   * @apiGroup Opinion
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {id} id The id of the photo
+   *
+   */
   const getOpinion = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
@@ -63,6 +81,15 @@ module.exports = (models) => {
     return response.success_response(h, {opinion: opinionValue}, null, 200);
   };
 
+  /**
+   * @api {delete} /api/v1/photo/{id}/opinion delete the current user opinion for a photo
+   * @apiName DeleteUserOpinion
+   * @apiGroup Opinion
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {id} id The id of the photo
+   *
+   */
   const deleteOpinion = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
@@ -108,7 +135,7 @@ module.exports = (models) => {
     {
       method: "PUT",
       path: "/photo/{id}/opinion",
-      handler: postOpinion,
+      handler: putOpinion,
       options: {
         auth: "default",
         validate: {

@@ -5,6 +5,15 @@ const response = require("../tools/response");
 
 module.exports = (models) => {
 
+  /**
+   * @api {get} /api/v1/category/{category_id}/photos Get photo by category
+   * @apiName GetPhotosDataByCategory
+   * @apiGroup Photo
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {category_id} category_id The id of the category where to search for photos
+   *
+   */
   const getPhotos = async (request, h) => {
     const result = [];
 
@@ -38,6 +47,19 @@ module.exports = (models) => {
     return response.success_response(h, result, null, 200);
   };
 
+  /**
+   * @api {post} /api/v1/category/{category_id}/photo Add a photo to a category
+   * @apiName AddPhotoToCategory
+   * @apiGroup Photo
+   * @apiVersion 1.0.0
+   *
+   * @apiDescription Warning: the file, title and description parameters must be sent to the format multipart/form-data
+   *
+   * @apiParam {title} title The title of the photo
+   * @apiParam {description} description The description associated with the photo
+   * @apiParam {file} file The photo file (jpeg or png accepted)
+   *
+   */
   const addPhoto = async (request, h) => {
     const category = await models.category.findOne({
       where: {
@@ -82,6 +104,17 @@ module.exports = (models) => {
     return response.success_response(h, photo.dataValues, null, 201);
   };
 
+  /**
+   * @api {get} /api/v1/photo/{id} Get the picture in itself
+   * @apiName GetPhotoFile
+   * @apiGroup Photo
+   * @apiVersion 1.0.0
+   *
+   * @apiDescription This call is used to get and display a photo from the photo url provided while searching photos by categories
+   *
+   * @apiParam {id} id The id of the photo
+   *
+   */
   const readPhoto = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
@@ -108,6 +141,15 @@ module.exports = (models) => {
     return h.response(file).type(photo.mime_type).code(200);
   };
 
+  /**
+   * @api {delete} /api/v1/photo/{id} Delete the photo
+   * @apiName DeletePhoto
+   * @apiGroup Photo
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {id} category_id The id of the category where to search for photos
+   *
+   */
   const delPhoto = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {

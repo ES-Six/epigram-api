@@ -32,6 +32,12 @@ Windows
 
     set NODE_ENV=production
     npm start
+
+### Read the doc online using github pages
+
+Just go to this link :
+
+[https://github.com/andnerb/epigram-api/tree/master/docs](https://github.com/andnerb/epigram-api/tree/master/docs)
     
 ### Generate documentation
 

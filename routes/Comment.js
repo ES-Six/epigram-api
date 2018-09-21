@@ -4,6 +4,15 @@ const response = require("../tools/response");
 
 module.exports = (models) => {
 
+  /**
+   * @api {get} /api/v1/photo/{id}/comments get the commments for a photo
+   * @apiName GetPhotoComments
+   * @apiGroup Comment
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {id} id The id of the photo
+   *
+   */
   const getComments = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
@@ -29,6 +38,15 @@ module.exports = (models) => {
     return response.success_response(h, result, null, 200);
   };
 
+  /**
+   * @api {post} /api/v1/photo/{id}/comment Post a comment to a photo
+   * @apiName AddPhotoComments
+   * @apiGroup Comment
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {id} id The id of the photo
+   *
+   */
   const addComment = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
@@ -49,6 +67,16 @@ module.exports = (models) => {
     return response.success_response(h, null, "Comment added", 200);
   };
 
+  /**
+   * @api {delete} /api/v1/photo/{id}/comment/{id_comment} Delete a commments for a photo
+   * @apiName DeletePhotoComments
+   * @apiGroup Comment
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {id} id The id of the photo
+   * @apiParam {id_comment} id_comment The id of the comment of the photo
+   *
+   */
   const delComment = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
