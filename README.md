@@ -35,9 +35,9 @@ Windows
 
 ### Read the doc online using github pages
 
-Just go to this link :
+Just click this link :
 
-[https://github.com/andnerb/epigram-api/tree/master/docs](https://github.com/andnerb/epigram-api/tree/master/docs)
+[https://andnerb.github.io/epigram-api/](https://andnerb.github.io/epigram-api/)
     
 ### Generate documentation
 
