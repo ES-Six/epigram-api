@@ -13,6 +13,13 @@ module.exports = (models) => {
    *
    * @apiParam {category_id} category_id The id of the category where to search for photos
    *
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
+   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeaderExample {header} X-API-KEY
+   * X-API-KEY: your_token...
+   * @apiHeaderExample {header} Content-Type
+   * Content-Type: application/json
+   *
    */
   const getPhotos = async (request, h) => {
     const result = [];
@@ -58,6 +65,13 @@ module.exports = (models) => {
    * @apiParam {title} title The title of the photo
    * @apiParam {description} description The description associated with the photo
    * @apiParam {file} file The photo file (jpeg or png accepted)
+   *
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
+   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be multipart/form-data for this route
+   * @apiHeaderExample {header} X-API-KEY
+   * X-API-KEY: your_token...
+   * @apiHeaderExample {header} Content-Type
+   * Content-Type: multipart/form-data
    *
    */
   const addPhoto = async (request, h) => {
@@ -114,6 +128,13 @@ module.exports = (models) => {
    *
    * @apiParam {id} id The id of the photo
    *
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
+   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeaderExample {header} X-API-KEY
+   * X-API-KEY: your_token...
+   * @apiHeaderExample {header} Content-Type
+   * Content-Type: application/json
+   *
    */
   const readPhoto = async (request, h) => {
     const photo = await models.photo.findOne({
@@ -148,6 +169,13 @@ module.exports = (models) => {
    * @apiVersion 1.0.0
    *
    * @apiParam {id} category_id The id of the category where to search for photos
+   *
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
+   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeaderExample {header} X-API-KEY
+   * X-API-KEY: your_token...
+   * @apiHeaderExample {header} Content-Type
+   * Content-Type: application/json
    *
    */
   const delPhoto = async (request, h) => {

@@ -6,6 +6,38 @@ define({ "api": [
     "name": "DeletePhotoComments",
     "group": "Category",
     "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
     "filename": "routes/Category.js",
     "groupTitle": "Category"
   },
@@ -28,6 +60,38 @@ define({ "api": [
           }
         ]
       }
+    },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
     },
     "filename": "routes/Comment.js",
     "groupTitle": "Comment"
@@ -58,6 +122,38 @@ define({ "api": [
           }
         ]
       }
+    },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
     },
     "filename": "routes/Comment.js",
     "groupTitle": "Comment"
@@ -105,6 +201,38 @@ define({ "api": [
         ]
       }
     },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
     "filename": "routes/Opinion.js",
     "groupTitle": "Opinion"
   },
@@ -128,6 +256,38 @@ define({ "api": [
         ]
       }
     },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
     "filename": "routes/Opinion.js",
     "groupTitle": "Opinion"
   },
@@ -150,6 +310,38 @@ define({ "api": [
           }
         ]
       }
+    },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
     },
     "filename": "routes/Opinion.js",
     "groupTitle": "Opinion"
@@ -189,6 +381,38 @@ define({ "api": [
         ]
       }
     },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be multipart/form-data for this route</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: multipart/form-data",
+          "type": "header"
+        }
+      ]
+    },
     "filename": "routes/Photo.js",
     "groupTitle": "Photo"
   },
@@ -211,6 +435,38 @@ define({ "api": [
           }
         ]
       }
+    },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
     },
     "filename": "routes/Photo.js",
     "groupTitle": "Photo"
@@ -236,6 +492,38 @@ define({ "api": [
         ]
       }
     },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
     "filename": "routes/Photo.js",
     "groupTitle": "Photo"
   },
@@ -259,6 +547,38 @@ define({ "api": [
         ]
       }
     },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
     "filename": "routes/Photo.js",
     "groupTitle": "Photo"
   },
@@ -269,6 +589,38 @@ define({ "api": [
     "name": "DeleteUser",
     "group": "User",
     "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
     "filename": "routes/User.js",
     "groupTitle": "User"
   },
@@ -279,6 +631,38 @@ define({ "api": [
     "name": "ReadUser",
     "group": "User",
     "version": "1.0.0",
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value is required to access this route.</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>The content type must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
     "filename": "routes/User.js",
     "groupTitle": "User"
   },

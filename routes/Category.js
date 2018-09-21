@@ -8,6 +8,13 @@ module.exports = (models) => {
    * @apiGroup Category
    * @apiVersion 1.0.0
    *
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
+   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeaderExample {header} X-API-KEY
+   * X-API-KEY: your_token...
+   * @apiHeaderExample {header} Content-Type
+   * Content-Type: application/json
+   *
    */
   const getCategories = async (request, h) => {
     const result = [];
