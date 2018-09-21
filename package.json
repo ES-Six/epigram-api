@@ -4,7 +4,8 @@
   "description": "EPIGram API is a RESTFULL API for EPIGram client using NodeJS with Framework HapiJS",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "lint": "node node_modules/eslint/bin/eslint.js ./app.js ./routes/*.js ./models/*.js ./migrations/*.js ./tools/*.js ./middleware/*.js"
   },
   "repository": {
     "type": "git",

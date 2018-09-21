@@ -1,15 +1,14 @@
-const response = require("../tools/response");
+const response = require('../tools/response');
 
 module.exports = (models) => {
-
   /**
    * @api {get} /api/v1/categories Get all available categories of the platform
    * @apiName DeletePhotoComments
    * @apiGroup Category
    * @apiVersion 1.0.0
    *
-   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
-   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
    * @apiHeaderExample {header} X-API-KEY
    * X-API-KEY: your_token...
    * @apiHeaderExample {header} Content-Type
@@ -30,12 +29,12 @@ module.exports = (models) => {
 
   return [
     {
-      method: "GET",
-      path: "/categories",
+      method: 'GET',
+      path: '/categories',
       config: {
-        auth: "default",
-        handler: getCategories
-      }
-    }
+        auth: 'default',
+        handler: getCategories,
+      },
+    },
   ];
 };

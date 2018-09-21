@@ -14,14 +14,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -69,14 +69,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -131,14 +131,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -178,6 +178,38 @@ define({ "api": [
         ]
       }
     },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value [required]</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>Must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
     "filename": "routes/Comment.js",
     "groupTitle": "Comment"
   },
@@ -209,14 +241,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -264,14 +296,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -319,14 +351,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -389,14 +421,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be multipart/form-data for this route</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -444,14 +476,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -500,14 +532,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be multipart/form-data</p>"
           }
         ]
       },
@@ -555,14 +587,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -597,14 +629,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },
@@ -639,14 +671,14 @@ define({ "api": [
             "type": "X-API-KEY",
             "optional": false,
             "field": "X-API-KEY",
-            "description": "<p>The api token value is required to access this route.</p>"
+            "description": "<p>The api token value [required]</p>"
           },
           {
             "group": "Header fields required",
             "type": "Content-Type",
             "optional": false,
             "field": "Content-Type",
-            "description": "<p>The content type must be application/json</p>"
+            "description": "<p>Must be application/json</p>"
           }
         ]
       },

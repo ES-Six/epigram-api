@@ -1,10 +1,9 @@
-const sha512 = require("js-sha512");
-const Joi = require("joi");
-const Boom = require("boom");
-const response = require("../tools/response");
+const sha512 = require('js-sha512');
+const Joi = require('joi');
+const Boom = require('boom');
+const response = require('../tools/response');
 
 module.exports = (models) => {
-
   /**
    * @api {post} /api/v1/user/login Login with email / password
    * @apiName UserLogin
@@ -18,8 +17,8 @@ module.exports = (models) => {
   const login = async (request, h) => {
     const user = await models.user.findOne({
       where: {
-        email: request.payload.email
-      }
+        email: request.payload.email,
+      },
     });
 
     if (user === null) {
@@ -27,9 +26,9 @@ module.exports = (models) => {
     }
 
     if (sha512(request.payload.password) === user.dataValues.password) {
-      return response.success_response(h, { token: user.dataValues.api_token }, "login success", 200);
+      return response.success_response(h, { token: user.dataValues.api_token }, 'login success', 200);
     }
-    throw Boom.forbidden("bad password", "custom");
+    throw Boom.forbidden('bad password', 'custom');
   };
 
   /**
@@ -45,8 +44,8 @@ module.exports = (models) => {
   const registration = async (request, h) => {
     const user = await models.user.findOne({
       where: {
-        email: request.payload.email
-      }
+        email: request.payload.email,
+      },
     });
 
     if (user !== null) {
@@ -56,10 +55,10 @@ module.exports = (models) => {
     await models.user.create({
       email: request.payload.email,
       password: sha512(request.payload.password),
-      api_token: sha512(`${request.payload.email}${request.payload.password}${Date.now()}`)
+      api_token: sha512(`${request.payload.email}${request.payload.password}${Date.now()}`),
     });
 
-    return response.success_response(h, null, "User registered successfully", 201);
+    return response.success_response(h, null, 'User registered successfully', 201);
   };
 
   /**
@@ -68,8 +67,8 @@ module.exports = (models) => {
    * @apiGroup User
    * @apiVersion 1.0.0
    *
-   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
-   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
    * @apiHeaderExample {header} X-API-KEY
    * X-API-KEY: your_token...
    * @apiHeaderExample {header} Content-Type
@@ -87,8 +86,8 @@ module.exports = (models) => {
    * @apiGroup User
    * @apiVersion 1.0.0
    *
-   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
-   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
    * @apiHeaderExample {header} X-API-KEY
    * X-API-KEY: your_token...
    * @apiHeaderExample {header} Content-Type
@@ -96,26 +95,25 @@ module.exports = (models) => {
    *
    */
   const deleteUser = async (request, h) => {
-
     const pendingOpinionAndCommentDeletions = [];
 
     const photoIds = await models.photo.findAll({
       where: {
-        user_id: request.auth.credentials.user.id
+        user_id: request.auth.credentials.user.id,
       },
-      attributes: ['id']
+      attributes: ['id'],
     });
 
     for (let i = 0; i < photoIds.length; i += 1) {
       pendingOpinionAndCommentDeletions.push(models.opinion.destroy({
         where: {
-          photo_id: photoIds[i].dataValues.id
-        }
+          photo_id: photoIds[i].dataValues.id,
+        },
       }));
       pendingOpinionAndCommentDeletions.push(models.comment.destroy({
         where: {
-          photo_id: photoIds[i].dataValues.id
-        }
+          photo_id: photoIds[i].dataValues.id,
+        },
       }));
     }
 
@@ -123,61 +121,61 @@ module.exports = (models) => {
 
     await models.photo.destroy({
       where: {
-        user_id: request.auth.credentials.user.id
-      }
+        user_id: request.auth.credentials.user.id,
+      },
     });
 
     await models.user.destroy({
       where: {
-        id: request.auth.credentials.user.id
-      }
+        id: request.auth.credentials.user.id,
+      },
     });
 
-    return response.success_response(h, null, "Your account and all associated ressources has been deleted", 202);
+    return response.success_response(h, null, 'Your account and all associated ressources has been deleted', 202);
   };
 
   return [
     {
-      method: "GET",
-      path: "/user",
+      method: 'GET',
+      path: '/user',
       config: {
-        auth: "default",
-        handler: readuser
-      }
+        auth: 'default',
+        handler: readuser,
+      },
     },
     {
-      method: "POST",
-      path: "/user/login",
+      method: 'POST',
+      path: '/user/login',
       handler: login,
       options: {
         validate: {
           payload: {
             email: Joi.string().email().required(),
-            password: Joi.string().required()
-          }
-        }
-      }
+            password: Joi.string().required(),
+          },
+        },
+      },
     },
     {
-      method: "POST",
-      path: "/user/register",
+      method: 'POST',
+      path: '/user/register',
       handler: registration,
       options: {
         validate: {
           payload: {
             email: Joi.string().email().required(),
-            password: Joi.string().min(6).max(32).required()
-          }
-        }
-      }
+            password: Joi.string().min(6).max(32).required(),
+          },
+        },
+      },
     },
     {
-      method: "DELETE",
-      path: "/user",
+      method: 'DELETE',
+      path: '/user',
       config: {
-        auth: "default",
-        handler: deleteUser
-      }
-    }
+        auth: 'default',
+        handler: deleteUser,
+      },
+    },
   ];
 };

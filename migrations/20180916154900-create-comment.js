@@ -1,25 +1,25 @@
 module.exports = {
   up: (queryInterface, Sequelize) => (
-    queryInterface.createTable("comments", {
+    queryInterface.createTable('comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       text: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
       },
       photo_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       user_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     })
   ),
-  down: (queryInterface) => (queryInterface.dropTable("comments"))
+  down: queryInterface => (queryInterface.dropTable('comments')),
 };

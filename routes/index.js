@@ -1,10 +1,10 @@
 const models = require('../models');
 
-const User = require(`./User`)(models);
-const Category = require(`./Category`)(models);
-const Photo = require(`./Photo`)(models);
-const Comment = require(`./Comment`)(models);
-const Opinion = require(`./Opinion`)(models);
+const User = require('./User')(models);
+const Category = require('./Category')(models);
+const Photo = require('./Photo')(models);
+const Comment = require('./Comment')(models);
+const Opinion = require('./Opinion')(models);
 
 let routes = [];
 

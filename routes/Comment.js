@@ -1,9 +1,8 @@
-const Joi = require("joi");
-const Boom = require("boom");
-const response = require("../tools/response");
+const Joi = require('joi');
+const Boom = require('boom');
+const response = require('../tools/response');
 
 module.exports = (models) => {
-
   /**
    * @api {get} /api/v1/photo/{id}/comments get the commments for a photo
    * @apiName GetPhotoComments
@@ -12,12 +11,19 @@ module.exports = (models) => {
    *
    * @apiParam {id} id The id of the photo
    *
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
+   * @apiHeaderExample {header} X-API-KEY
+   * X-API-KEY: your_token...
+   * @apiHeaderExample {header} Content-Type
+   * Content-Type: application/json
+   *
    */
   const getComments = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
-        id: request.params.id
-      }
+        id: request.params.id,
+      },
     });
 
     if (photo === null) {
@@ -26,8 +32,8 @@ module.exports = (models) => {
 
     const comments = await models.comment.findAll({
       where: {
-        photo_id: request.params.id
-      }
+        photo_id: request.params.id,
+      },
     });
 
     const result = [];
@@ -46,8 +52,8 @@ module.exports = (models) => {
    *
    * @apiParam {id} id The id of the photo
    *
-   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
-   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
    * @apiHeaderExample {header} X-API-KEY
    * X-API-KEY: your_token...
    * @apiHeaderExample {header} Content-Type
@@ -57,8 +63,8 @@ module.exports = (models) => {
   const addComment = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
-        id: request.params.id
-      }
+        id: request.params.id,
+      },
     });
 
     if (photo === null) {
@@ -68,10 +74,10 @@ module.exports = (models) => {
     await models.comment.create({
       text: request.payload.text,
       photo_id: request.params.id,
-      user_id: request.auth.credentials.user.id
+      user_id: request.auth.credentials.user.id,
     });
 
-    return response.success_response(h, null, "Comment added", 200);
+    return response.success_response(h, null, 'Comment added', 200);
   };
 
   /**
@@ -83,8 +89,8 @@ module.exports = (models) => {
    * @apiParam {id} id The id of the photo
    * @apiParam {id_comment} id_comment The id of the comment of the photo
    *
-   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
-   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
    * @apiHeaderExample {header} X-API-KEY
    * X-API-KEY: your_token...
    * @apiHeaderExample {header} Content-Type
@@ -94,8 +100,8 @@ module.exports = (models) => {
   const delComment = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
-        id: request.params.id
-      }
+        id: request.params.id,
+      },
     });
 
     if (photo === null) {
@@ -104,53 +110,53 @@ module.exports = (models) => {
 
     await models.comment.destroy({
       where: {
-        id: request.params.id_comment
-      }
+        id: request.params.id_comment,
+      },
     });
 
-    return response.success_response(h, null, "Comment deleted", 202);
+    return response.success_response(h, null, 'Comment deleted', 202);
   };
 
   return [
     {
-      method: "GET",
-      path: "/photo/{id}/comments",
+      method: 'GET',
+      path: '/photo/{id}/comments',
       handler: getComments,
       options: {
-        auth: "default",
-        validate: {
-          params: {
-            id: Joi.number().integer().required()
-          }
-        }
-      }
-    },
-    {
-      method: "POST",
-      path: "/photo/{id}/comment",
-      handler: addComment,
-      options: {
-        auth: "default",
-        validate: {
-          params: {
-            id: Joi.number().integer().required()
-          }
-        }
-      }
-    },
-    {
-      method: "DELETE",
-      path: "/photo/{id}/comment/{id_comment}",
-      handler: delComment,
-      options: {
-        auth: "default",
+        auth: 'default',
         validate: {
           params: {
             id: Joi.number().integer().required(),
-            id_comment: Joi.number().integer().required()
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    },
+    {
+      method: 'POST',
+      path: '/photo/{id}/comment',
+      handler: addComment,
+      options: {
+        auth: 'default',
+        validate: {
+          params: {
+            id: Joi.number().integer().required(),
+          },
+        },
+      },
+    },
+    {
+      method: 'DELETE',
+      path: '/photo/{id}/comment/{id_comment}',
+      handler: delComment,
+      options: {
+        auth: 'default',
+        validate: {
+          params: {
+            id: Joi.number().integer().required(),
+            id_comment: Joi.number().integer().required(),
+          },
+        },
+      },
+    },
   ];
 };

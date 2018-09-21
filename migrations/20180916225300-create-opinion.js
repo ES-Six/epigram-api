@@ -1,25 +1,25 @@
 module.exports = {
   up: (queryInterface, Sequelize) => (
-    queryInterface.createTable("opinions", {
+    queryInterface.createTable('opinions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       opinion: {
         type: Sequelize.ENUM('LIKE', 'DISLIKE'),
-        allowNull: false
+        allowNull: false,
       },
       photo_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       user_id: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     })
   ),
-  down: (queryInterface) => (queryInterface.dropTable("opinions"))
+  down: queryInterface => (queryInterface.dropTable('opinions')),
 };

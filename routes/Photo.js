@@ -1,10 +1,9 @@
-const Joi = require("joi");
-const Boom = require("boom");
+const Joi = require('joi');
+const Boom = require('boom');
 const fs = require('fs');
-const response = require("../tools/response");
+const response = require('../tools/response');
 
 module.exports = (models) => {
-
   /**
    * @api {get} /api/v1/category/{category_id}/photos Get photo by category
    * @apiName GetPhotosDataByCategory
@@ -13,8 +12,8 @@ module.exports = (models) => {
    *
    * @apiParam {category_id} category_id The id of the category where to search for photos
    *
-   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
-   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
    * @apiHeaderExample {header} X-API-KEY
    * X-API-KEY: your_token...
    * @apiHeaderExample {header} Content-Type
@@ -26,8 +25,8 @@ module.exports = (models) => {
 
     const category = await models.category.findOne({
       where: {
-        id: request.params.category_id
-      }
+        id: request.params.category_id,
+      },
     });
 
     if (category === null) {
@@ -36,12 +35,12 @@ module.exports = (models) => {
 
     const photos = await models.photo.findAll({
       where: {
-        category_id: request.params.category_id
+        category_id: request.params.category_id,
       },
       attributes: Object.keys(models.photo.attributes).concat([
         [models.sequelize.literal("(SELECT COUNT(*) FROM opinions WHERE opinions.photo_id = photo.id AND opinions.opinion = 'LIKE')"), 'total_likes'],
-        [models.sequelize.literal("(SELECT COUNT(*) FROM opinions WHERE opinions.photo_id = photo.id AND opinions.opinion = 'DISLIKE')"), 'total_dislikes']
-      ])
+        [models.sequelize.literal("(SELECT COUNT(*) FROM opinions WHERE opinions.photo_id = photo.id AND opinions.opinion = 'DISLIKE')"), 'total_dislikes'],
+      ]),
     });
 
     for (let idx = 0; idx < photos.length; idx += 1) {
@@ -60,14 +59,15 @@ module.exports = (models) => {
    * @apiGroup Photo
    * @apiVersion 1.0.0
    *
-   * @apiDescription Warning: the file, title and description parameters must be sent to the format multipart/form-data
+   * @apiDescription Warning: the file, title and description parameters
+   * must be sent to the format multipart/form-data
    *
    * @apiParam {title} title The title of the photo
    * @apiParam {description} description The description associated with the photo
    * @apiParam {file} file The photo file (jpeg or png accepted)
    *
-   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
-   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be multipart/form-data for this route
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
    * @apiHeaderExample {header} X-API-KEY
    * X-API-KEY: your_token...
    * @apiHeaderExample {header} Content-Type
@@ -77,8 +77,8 @@ module.exports = (models) => {
   const addPhoto = async (request, h) => {
     const category = await models.category.findOne({
       where: {
-        id: request.params.category_id
-      }
+        id: request.params.category_id,
+      },
     });
 
     if (category === null) {
@@ -91,11 +91,11 @@ module.exports = (models) => {
       file_path: null,
       category_id: request.params.category_id,
       user_id: request.auth.credentials.user.id,
-      mime_type: request.payload.file.hapi.headers['content-type']
+      mime_type: request.payload.file.hapi.headers['content-type'],
     });
 
     await photo.updateAttributes({
-      file_path: `file_vault/${photo.dataValues.id}.jpg`
+      file_path: `file_vault/${photo.dataValues.id}.jpg`,
     });
 
     // Read uploaded file stream and put it to a buffer
@@ -103,8 +103,7 @@ module.exports = (models) => {
     const bufferss = [];
     while (chunk !== null) {
       chunk = request.payload.file.read();
-      if (chunk === null)
-        break;
+      if (chunk === null) break;
       bufferss.push(chunk);
     }
     const buffer = Buffer.concat(bufferss);
@@ -124,12 +123,13 @@ module.exports = (models) => {
    * @apiGroup Photo
    * @apiVersion 1.0.0
    *
-   * @apiDescription This call is used to get and display a photo from the photo url provided while searching photos by categories
+   * @apiDescription This call is used to get and display a photo
+   * from the photo url provided while searching photos by categories
    *
    * @apiParam {id} id The id of the photo
    *
-   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
-   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be multipart/form-data
    * @apiHeaderExample {header} X-API-KEY
    * X-API-KEY: your_token...
    * @apiHeaderExample {header} Content-Type
@@ -139,8 +139,8 @@ module.exports = (models) => {
   const readPhoto = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
-        id: request.params.id
-      }
+        id: request.params.id,
+      },
     });
 
     if (photo === null) {
@@ -151,8 +151,7 @@ module.exports = (models) => {
     try {
       file = fs.readFileSync(photo.dataValues.file_path);
     } catch (exception) {
-      if (exception.code === 'ENOENT')
-        throw Boom.resourceGone(`Photo with id ${photo.dataValues.id} exist but corresponding file could not be found`);
+      if (exception.code === 'ENOENT') throw Boom.resourceGone(`Photo with id ${photo.dataValues.id} exist but corresponding file could not be found`);
       else {
         global.console.err(exception);
         throw Boom.internal(`Photo with id ${photo.dataValues.id} exist but file could not be read`);
@@ -170,8 +169,8 @@ module.exports = (models) => {
    *
    * @apiParam {id} category_id The id of the category where to search for photos
    *
-   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value is required to access this route.
-   * @apiHeader (Header fields required) {Content-Type} Content-Type The content type must be application/json
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
    * @apiHeaderExample {header} X-API-KEY
    * X-API-KEY: your_token...
    * @apiHeaderExample {header} Content-Type
@@ -181,8 +180,8 @@ module.exports = (models) => {
   const delPhoto = async (request, h) => {
     const photo = await models.photo.findOne({
       where: {
-        id: request.params.id
-      }
+        id: request.params.id,
+      },
     });
 
     if (photo === null) {
@@ -191,79 +190,79 @@ module.exports = (models) => {
 
     await Promise.all([models.opinion.destroy({
       where: {
-        photo_id: request.params.id
-      }
+        photo_id: request.params.id,
+      },
     }),
     models.comment.destroy({
       where: {
-        photo_id: request.params.id
-      }
+        photo_id: request.params.id,
+      },
     })]);
 
     await models.photo.destroy({
       where: {
-        id: request.params.id
-      }
+        id: request.params.id,
+      },
     });
 
-    return response.success_response(h, null, "Photo and associated ressources deleted", 202);
+    return response.success_response(h, null, 'Photo and associated ressources deleted', 202);
   };
 
   return [
     {
-      method: "GET",
-      path: "/category/{category_id}/photos",
+      method: 'GET',
+      path: '/category/{category_id}/photos',
       handler: getPhotos,
       options: {
-        auth: "default",
+        auth: 'default',
         validate: {
           params: {
-            category_id: Joi.number().integer().required()
-          }
-        }
-      }
+            category_id: Joi.number().integer().required(),
+          },
+        },
+      },
     },
     {
-      method: "GET",
-      path: "/photo/{id}",
+      method: 'GET',
+      path: '/photo/{id}',
       handler: readPhoto,
       options: {
-        auth: "default",
+        auth: 'default',
         validate: {
           params: {
-            id: Joi.number().integer().required()
-          }
-        }
-      }
+            id: Joi.number().integer().required(),
+          },
+        },
+      },
     },
     {
-      method: "DELETE",
-      path: "/photo/{id}",
+      method: 'DELETE',
+      path: '/photo/{id}',
       handler: delPhoto,
       options: {
-        auth: "default",
+        auth: 'default',
         validate: {
           params: {
-            id: Joi.number().integer().required()
-          }
-        }
-      }
+            id: Joi.number().integer().required(),
+          },
+        },
+      },
     },
     {
-      method: "POST",
-      path: "/category/{category_id}/photo",
+      method: 'POST',
+      path: '/category/{category_id}/photo',
       handler: addPhoto,
       options: {
-        auth: "default",
+        auth: 'default',
         payload: {
-          output: "stream",
+          output: 'stream',
           parse: true,
-          allow: "multipart/form-data",
-          maxBytes: 10 * 1024 * 1024 // max 10 Mo
+          allow: 'multipart/form-data',
+          maxBytes: 10 * 1024 * 1024, // max 10 Mo
         },
         validate: {
           params: {
-            category_id: Joi.number().integer().required()
+            category_id: Joi.number().integer().required(),
           },
           payload: {
             title: Joi.string().max(255).required(),
@@ -271,13 +270,13 @@ module.exports = (models) => {
             file: Joi.object({
               hapi: Joi.object({
                 headers: Joi.object({
-                  'content-type': Joi.string().valid(['image/jpeg', 'image/png']).required()
-                }).unknown()
-              }).unknown()
-            }).unknown()
-          }
-        }
-      }
-    }
+                  'content-type': Joi.string().valid(['image/jpeg', 'image/png']).required(),
+                }).unknown(),
+              }).unknown(),
+            }).unknown(),
+          },
+        },
+      },
+    },
   ];
 };
