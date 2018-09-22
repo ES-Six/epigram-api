@@ -1,6 +1,7 @@
 const Hapi = require('hapi');
 const routes = require('./routes');
-const authMiddleware = require('./middleware/apiAuth.js');
+const authMiddleware = require('./middleware/apiAuth');
+const chat = require('./tools/chat');
 
 const server = Hapi.server({
   host: 'localhost',
@@ -19,6 +20,8 @@ server.realm.modifiers.route.prefix = '/api/v1';
 server.auth.scheme('custom', authMiddleware);
 server.auth.strategy('default', 'custom');
 server.route(routes);
+
+chat.init();
 
 // Start the server
 async function start() {
