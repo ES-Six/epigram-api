@@ -1,4 +1,4 @@
-const io = require('socket.io')(8000);
+const io = require('socket.io')(8001);
 
 const usersChanelConnection = [];
 
@@ -50,7 +50,7 @@ const init = () => {
       global.console.log('Client disconnected');
     });
   });
-  global.console.log('Websocket server started on port 8000');
+  global.console.log('Websocket server started on port 8001');
 };
 
 module.exports = {

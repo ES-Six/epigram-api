@@ -7,6 +7,7 @@ const server = Hapi.server({
   host: 'localhost',
   port: 8000,
   routes: {
+    cors: true,
     validate: {
       failAction: async (request, h, err) => {
         throw err;
