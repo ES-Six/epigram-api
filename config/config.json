@@ -22,7 +22,7 @@
     "database": "epigram",
     "host": "localhost",
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
     "logging": false
   }
 }
