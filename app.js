@@ -5,7 +5,7 @@ const chat = require('./tools/chat');
 
 const server = Hapi.server({
   host: 'localhost',
-  port: 8000,
+  port: process.env.PORT || 8002,
   routes: {
     cors: true,
     validate: {

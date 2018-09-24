@@ -1,4 +1,4 @@
-const io = require('socket.io')(8001);
+const io = require('socket.io')(process.env.SOCKET_PORT || 8005);
 
 const usersChanelConnection = [];
 

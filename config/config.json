@@ -17,12 +17,12 @@
     "operatorsAliases": false
   },
   "production": {
-    "username": "root",
+	"username": "root",
     "password": "root",
     "database": "epigram",
     "host": "localhost",
     "dialect": "mysql",
-    "operatorsAliases": false,
+    "operatorsAliases": false
     "logging": false
   }
 }
