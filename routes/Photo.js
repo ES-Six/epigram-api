@@ -94,9 +94,15 @@ module.exports = (models) => {
       mime_type: request.payload.file.hapi.headers['content-type'],
     });
 
-    await photo.updateAttributes({
-      file_path: `file_vault/${photo.dataValues.id}.jpg`,
-    });
+    if (process.env.WRITE_DIR) {
+      await photo.updateAttributes({
+        file_path: `${process.env.WRITE_DIR}/${photo.dataValues.id}.jpg`,
+      });
+    } else {
+      await photo.updateAttributes({
+        file_path: `file_vault/${photo.dataValues.id}.jpg`,
+      });
+    }
 
     // Read uploaded file stream and put it to a buffer
     let chunk;
@@ -109,7 +115,11 @@ module.exports = (models) => {
     const buffer = Buffer.concat(bufferss);
 
     // Save buffer to disk
-    fs.writeFileSync(`file_vault/${photo.dataValues.id}.jpg`, buffer);
+    if (process.env.WRITE_DIR) {
+      fs.writeFileSync(`${process.env.WRITE_DIR}/${photo.dataValues.id}.jpg`, buffer);
+    } else {
+      fs.writeFileSync(`file_vault/${photo.dataValues.id}.jpg`, buffer);
+    }
 
     delete photo.dataValues.file_path;
     photo.dataValues.url = `/photo/${photo.dataValues.id}`;
@@ -227,7 +237,6 @@ module.exports = (models) => {
       path: '/photo/{id}',
       handler: readPhoto,
       options: {
-        auth: 'default',
         validate: {
           params: {
             id: Joi.number().integer().required(),
