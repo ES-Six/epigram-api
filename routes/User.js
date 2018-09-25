@@ -134,6 +134,53 @@ module.exports = (models) => {
     return response.success_response(h, null, 'Your account and all associated ressources has been deleted', 202);
   };
 
+  /**
+   * @api {get} /api/v1/user/photos Get photos of current user
+   * @apiName GetuserPhotos
+   * @apiGroup User
+   * @apiVersion 1.0.0
+   *
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
+   * @apiHeaderExample {header} X-API-KEY
+   * X-API-KEY: your_token...
+   * @apiHeaderExample {header} Content-Type
+   * Content-Type: application/json
+   *
+   */
+  const getPhotos = async (request, h) => {
+    const result = [];
+
+    const category = await models.category.findOne({
+      where: {
+        id: request.params.category_id,
+      },
+    });
+
+    if (category === null) {
+      throw Boom.notFound(`Category with id '${request.params.category_id}' does not exist`, null);
+    }
+
+    const photos = await models.photo.findAll({
+      where: {
+        user_id: request.auth.credentials.user.id,
+      },
+      attributes: Object.keys(models.photo.attributes).concat([
+        [models.sequelize.literal("(SELECT COUNT(*) FROM opinions WHERE opinions.photo_id = photo.id AND opinions.opinion = 'LIKE')"), 'total_likes'],
+        [models.sequelize.literal("(SELECT COUNT(*) FROM opinions WHERE opinions.photo_id = photo.id AND opinions.opinion = 'DISLIKE')"), 'total_dislikes'],
+      ]),
+    });
+
+    for (let idx = 0; idx < photos.length; idx += 1) {
+      delete photos[idx].dataValues.file_path;
+      photos[idx].dataValues.url = `/photo/${photos[idx].dataValues.id}`;
+
+      result.push(photos[idx].dataValues);
+    }
+
+    return response.success_response(h, result, null, 200);
+  };
+
   return [
     {
       method: 'GET',
@@ -175,6 +222,14 @@ module.exports = (models) => {
       config: {
         auth: 'default',
         handler: deleteUser,
+      },
+    },
+    {
+      method: 'GET',
+      path: '/user/photos',
+      handler: getPhotos,
+      options: {
+        auth: 'default',
       },
     },
   ];
