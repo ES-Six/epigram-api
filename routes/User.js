@@ -151,16 +151,6 @@ module.exports = (models) => {
   const getPhotos = async (request, h) => {
     const result = [];
 
-    const category = await models.category.findOne({
-      where: {
-        id: request.params.category_id,
-      },
-    });
-
-    if (category === null) {
-      throw Boom.notFound(`Category with id '${request.params.category_id}' does not exist`, null);
-    }
-
     const photos = await models.photo.findAll({
       where: {
         user_id: request.auth.credentials.user.id,
