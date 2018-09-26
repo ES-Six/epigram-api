@@ -85,6 +85,10 @@ module.exports = (models) => {
       throw Boom.notFound(`Category with id '${request.params.category_id}' does not exist`, null);
     }
 
+    if (!request.payload.file) {
+      throw Boom.badRequest('You must provide a file in the request');
+    }
+
     const photo = await models.photo.create({
       title: request.payload.title,
       description: request.payload.description,
