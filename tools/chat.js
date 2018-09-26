@@ -1,8 +1,6 @@
-const io = require('socket.io')(process.env.SOCKET_PORT || 8005);
-
 const usersChanelConnection = [];
 
-const init = () => {
+const init = (io) => {
   io.on('connection', (socket) => {
     global.console.log('Client connected');
     socket.on('onChanelSubscribe', (chanelId) => {
