@@ -1,9 +1,10 @@
 const usersChanelConnection = [];
+let messageId = 1;
 
 const init = (io) => {
   io.on('connection', (socket) => {
     global.console.log('Client connected');
-    socket.on('onChanelSubscribe', (chanelId) => {
+    socket.on('chanelSubscribe', (chanelId) => {
       let userFound = false;
       for (let i = 0; i < usersChanelConnection.length; i += 1) {
         if (usersChanelConnection[i].socket === socket) {
@@ -20,7 +21,8 @@ const init = (io) => {
       }
       global.console.log('User suscripted to chanel');
     });
-    socket.on('onUserSentMessage', (message) => {
+
+    socket.on('sendMessage', (message) => {
       let userChanel = null;
       for (let i = 0; i < usersChanelConnection.length; i += 1) {
         if (usersChanelConnection[i].socket === socket) {
@@ -31,24 +33,26 @@ const init = (io) => {
 
       for (let i = 0; i < usersChanelConnection.length; i += 1) {
         if (usersChanelConnection[i].chanel === userChanel) {
-          socket.emit({
+          socket.emit('newMessage', {
             message,
+            id: messageId,
           });
         }
       }
-      global.console.log('New message');
+      messageId += 1;
     });
+
     socket.on('disconnect', () => {
       for (let i = 0; i < usersChanelConnection.length; i += 1) {
         if (usersChanelConnection[i].socket === socket) {
           global.console.log('Client removed from list');
-          delete usersChanelConnection[i];
+          usersChanelConnection.splice(i, 1);
         }
       }
       global.console.log('Client disconnected');
     });
   });
-  global.console.log('Websocket server started on port 8001');
+  global.console.log('Websocket server started');
 };
 
 module.exports = {

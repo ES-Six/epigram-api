@@ -1,7 +1,7 @@
 const Hapi = require('hapi');
 
 const server = Hapi.server({
-  host: 'localhost',
+  host: process.env.HOST || 'localhost',
   port: process.env.PORT || 8002,
   routes: {
     cors: {
@@ -25,7 +25,6 @@ server.realm.modifiers.route.prefix = '/api/v1';
 server.auth.scheme('custom', authMiddleware);
 server.auth.strategy('default', 'custom');
 server.route(routes);
-
 chat.init(io);
 
 // Start the server
