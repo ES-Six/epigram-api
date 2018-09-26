@@ -53,6 +53,7 @@ module.exports = (models) => {
     }
 
     await models.user.create({
+      username: request.payload.username,
       email: request.payload.email,
       password: sha512(request.payload.password),
       api_token: sha512(`${request.payload.email}${request.payload.password}${Date.now()}`),
@@ -200,6 +201,7 @@ module.exports = (models) => {
       options: {
         validate: {
           payload: {
+            username: Joi.string().required(),
             email: Joi.string().email().required(),
             password: Joi.string().min(6).max(32).required(),
           },
