@@ -34,6 +34,11 @@ module.exports = (models) => {
       where: {
         photo_id: request.params.id,
       },
+      include: [{
+        model: models.user,
+        required: true,
+        attributes: ['username'],
+      }],
     });
 
     const result = [];
@@ -140,6 +145,9 @@ module.exports = (models) => {
         validate: {
           params: {
             id: Joi.number().integer().required(),
+          },
+          payload: {
+            text: Joi.string().required(),
           },
         },
       },

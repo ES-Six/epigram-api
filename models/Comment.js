@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     timestamps: false,
   });
-  comment.associate = (/* models */) => {
-
+  comment.associate = (models) => {
+    comment.belongsTo(models.user, { foreignKey: 'user_id' });
   };
   return comment;
 };
