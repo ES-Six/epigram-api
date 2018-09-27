@@ -1,25 +1,38 @@
+const models = require('../models');
+
 const usersChanelConnection = [];
-let messageId = 1;
 
 const init = (io) => {
   io.on('connection', (socket) => {
     global.console.log('Client connected');
-    socket.on('chanelSubscribe', (chanelId) => {
-      let userFound = false;
-      for (let i = 0; i < usersChanelConnection.length; i += 1) {
-        if (usersChanelConnection[i].socket === socket) {
-          userFound = true;
-          usersChanelConnection[i].chanel = chanelId;
-          break;
+    socket.on('chanelSubscribe', (data) => {
+      models.user.findOne({
+        where: {
+          api_token: data.token,
+        },
+      }).then((user) => {
+        if (user === null) {
+          socket.emit('cannotConnectToChanel', 'bad token');
+          return;
         }
-      }
-      if (!userFound) {
-        usersChanelConnection.push({
-          socket,
-          chanel: chanelId,
-        });
-      }
-      global.console.log('User suscripted to chanel');
+        let userFound = false;
+        for (let i = 0; i < usersChanelConnection.length; i += 1) {
+          if (usersChanelConnection[i].socket === socket) {
+            userFound = true;
+            usersChanelConnection[i].chanel = data.chanelId;
+            break;
+          }
+        }
+        if (!userFound) {
+          usersChanelConnection.push({
+            socket,
+            chanel: data.chanelId,
+            username: user.dataValues.username,
+          });
+          socket.emit('connectedToChanel', 'success');
+        }
+        global.console.log('User suscripted to chanel');
+      });
     });
 
     socket.on('sendMessage', (message) => {
@@ -31,15 +44,27 @@ const init = (io) => {
         }
       }
 
+      if (userChanel === null) {
+        return;
+      }
+
+      let user = null;
       for (let i = 0; i < usersChanelConnection.length; i += 1) {
-        if (usersChanelConnection[i].chanel === userChanel) {
-          socket.emit('newMessage', {
+        if (usersChanelConnection[i].socket === socket) {
+          user = usersChanelConnection[i];
+          break;
+        }
+      }
+
+      for (let i = 0; i < usersChanelConnection.length; i += 1) {
+        if (usersChanelConnection[i].chanel === userChanel
+          && usersChanelConnection[i].socket !== socket) {
+          usersChanelConnection[i].socket.emit('newMessage', {
             message,
-            id: messageId,
+            username: user.username,
           });
         }
       }
-      messageId += 1;
     });
 
     socket.on('disconnect', () => {
