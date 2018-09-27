@@ -505,6 +505,61 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/api/v1/photo/{photo_id}/info",
+    "title": "Get single photo info",
+    "name": "GetPhotoData",
+    "group": "Photo",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "photo_id",
+            "optional": false,
+            "field": "photo_id",
+            "description": "<p>The id of the photo</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value [required]</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>Must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
+    "filename": "routes/Photo.js",
+    "groupTitle": "Photo"
+  },
+  {
+    "type": "get",
     "url": "/api/v1/photo/{id}",
     "title": "Get the picture in itself",
     "name": "GetPhotoFile",
