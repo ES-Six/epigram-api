@@ -127,6 +127,7 @@ module.exports = (models) => {
 
     delete photo.dataValues.file_path;
     photo.dataValues.url = `/photo/${photo.dataValues.id}`;
+    photo.dataValues.belongToUser = (photo.dataValues.user_id === request.auth.credentials.user.id);
 
     return response.success_response(h, photo.dataValues, null, 201);
   };
@@ -222,6 +223,40 @@ module.exports = (models) => {
     return response.success_response(h, null, 'Photo and associated ressources deleted', 202);
   };
 
+  /**
+   * @api {get} /api/v1/photo/{photo_id}/info Get single photo info
+   * @apiName GetPhotoData
+   * @apiGroup Photo
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {photo_id} photo_id The id of the photo
+   *
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
+   * @apiHeaderExample {header} X-API-KEY
+   * X-API-KEY: your_token...
+   * @apiHeaderExample {header} Content-Type
+   * Content-Type: application/json
+   *
+   */
+  const getPhotoInfo = async (request, h) => {
+    const photo = await models.photo.findOne({
+      where: {
+        id: request.params.photo_id,
+      },
+    });
+
+    if (photo === null) {
+      throw Boom.notFound(`Photo with id '${request.params.photo_id}' does not exist`, null);
+    }
+
+    delete photo.dataValues.file_path;
+    photo.dataValues.url = `/photo/${photo.dataValues.id}`;
+    photo.dataValues.belongToUser = (photo.dataValues.user_id === request.auth.credentials.user.id);
+
+    return response.success_response(h, photo.dataValues, null, 200);
+  };
+
   return [
     {
       method: 'GET',
@@ -232,6 +267,19 @@ module.exports = (models) => {
         validate: {
           params: {
             category_id: Joi.number().integer().required(),
+          },
+        },
+      },
+    },
+    {
+      method: 'GET',
+      path: '/photo/{photo_id}/info',
+      handler: getPhotoInfo,
+      options: {
+        auth: 'default',
+        validate: {
+          params: {
+            photo_id: Joi.number().integer().required(),
           },
         },
       },
