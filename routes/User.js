@@ -172,6 +172,46 @@ module.exports = (models) => {
     return response.success_response(h, result, null, 200);
   };
 
+  /**
+   * @api {patch} /api/v1/user Update user profile fields
+   * @apiName PatchUserProfile
+   * @apiGroup User
+   * @apiVersion 1.0.0
+   *
+   * @apiParam {name} name The user name
+   * @apiParam {first_name} first_name The user first name
+   * @apiParam {adress} adress The user adress
+   * @apiParam {city} city The user city
+   * @apiParam {zip} zip The user zip code
+   * @apiParam {country} country The user country
+   *
+   * @apiHeader (Header fields required) {X-API-KEY} X-API-KEY The api token value [required]
+   * @apiHeader (Header fields required) {Content-Type} Content-Type Must be application/json
+   * @apiHeaderExample {header} X-API-KEY
+   * X-API-KEY: your_token...
+   * @apiHeaderExample {header} Content-Type
+   * Content-Type: application/json
+   *
+   */
+  const updateUserProfile = async (request, h) => {
+    const user = await models.user.findOne({
+      where: {
+        id: request.auth.credentials.user.id,
+      },
+    });
+
+    await user.update({
+      name: request.payload.name,
+      first_name: request.payload.first_name,
+      city: request.payload.city,
+      adress: request.payload.adress,
+      zip: request.payload.zip,
+      country: request.payload.country,
+    });
+
+    return response.success_response(h, null, 'User profile patched successfully', 200);
+  };
+
   return [
     {
       method: 'GET',
@@ -214,6 +254,24 @@ module.exports = (models) => {
       config: {
         auth: 'default',
         handler: deleteUser,
+      },
+    },
+    {
+      method: 'PATCH',
+      path: '/user',
+      handler: updateUserProfile,
+      options: {
+        auth: 'default',
+        validate: {
+          payload: {
+            name: Joi.string().required(),
+            first_name: Joi.string().required(),
+            city: Joi.string().required(),
+            adress: Joi.string().required(),
+            zip: Joi.string().required(),
+            country: Joi.string().required(),
+          },
+        },
       },
     },
     {

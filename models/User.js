@@ -4,6 +4,12 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     api_token: DataTypes.STRING,
     username: DataTypes.STRING,
+    name: DataTypes.STRING,
+    first_name: DataTypes.STRING,
+    adress: DataTypes.STRING,
+    city: DataTypes.STRING,
+    zip: DataTypes.STRING,
+    country: DataTypes.STRING,
   }, {
     timestamps: true,
   });

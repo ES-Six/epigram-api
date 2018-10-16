@@ -244,6 +244,10 @@ module.exports = (models) => {
       where: {
         id: request.params.photo_id,
       },
+      attributes: Object.keys(models.photo.attributes).concat([
+        [models.sequelize.literal("(SELECT COUNT(*) FROM opinions WHERE opinions.photo_id = photo.id AND opinions.opinion = 'LIKE')"), 'total_likes'],
+        [models.sequelize.literal("(SELECT COUNT(*) FROM opinions WHERE opinions.photo_id = photo.id AND opinions.opinion = 'DISLIKE')"), 'total_dislikes'],
+      ]),
     });
 
     if (photo === null) {

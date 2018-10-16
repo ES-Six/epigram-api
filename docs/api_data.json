@@ -754,6 +754,96 @@
     "groupTitle": "User"
   },
   {
+    "type": "patch",
+    "url": "/api/v1/user",
+    "title": "Update user profile fields",
+    "name": "PatchUserProfile",
+    "group": "User",
+    "version": "1.0.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "name",
+            "optional": false,
+            "field": "name",
+            "description": "<p>The user name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "first_name",
+            "optional": false,
+            "field": "first_name",
+            "description": "<p>The user first name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "adress",
+            "optional": false,
+            "field": "adress",
+            "description": "<p>The user adress</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "city",
+            "optional": false,
+            "field": "city",
+            "description": "<p>The user city</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "zip",
+            "optional": false,
+            "field": "zip",
+            "description": "<p>The user zip code</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "country",
+            "optional": false,
+            "field": "country",
+            "description": "<p>The user country</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Header fields required": [
+          {
+            "group": "Header fields required",
+            "type": "X-API-KEY",
+            "optional": false,
+            "field": "X-API-KEY",
+            "description": "<p>The api token value [required]</p>"
+          },
+          {
+            "group": "Header fields required",
+            "type": "Content-Type",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>Must be application/json</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "X-API-KEY",
+          "content": "X-API-KEY: your_token...",
+          "type": "header"
+        },
+        {
+          "title": "Content-Type",
+          "content": "Content-Type: application/json",
+          "type": "header"
+        }
+      ]
+    },
+    "filename": "routes/User.js",
+    "groupTitle": "User"
+  },
+  {
     "type": "get",
     "url": "/api/v1/user",
     "title": "Get current user informations",
