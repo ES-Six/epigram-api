@@ -41,14 +41,10 @@ Windows
 
 Just click this link :
 
-[https://andnerb.github.io/epigram-api/](https://andnerb.github.io/epigram-api/)
+[https://es-six.github.io/epigram-api/](https://es-six.github.io/epigram-api/)
     
 ### Generate documentation
 
     npm install -g apidoc http-server
     apidoc -i routes -o docs
     cd docs && http-server -o
-
-### Link to production API
-
-[http://epigramapi-env.kiusnt23np.eu-west-3.elasticbeanstalk.com/api/v1](http://epigramapi-env.kiusnt23np.eu-west-3.elasticbeanstalk.com/api/v1)
